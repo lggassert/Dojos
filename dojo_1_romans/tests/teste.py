@@ -7,30 +7,28 @@ def roman(num):
     dezena = (num // 10) % 10
     centena = (num // 100) % 10
     milhar = (num // 1000) % 10
-
-    start = 4
-    intervals = [
-        (5, "IV", 0), # 4
-        (9, "V", num - 5), # 5 a 8
-        (10, "IX", 0), # 9
-        (40, "X" * dezena, unidade), # 10 a 39
-        (50, "XL", unidade), # 40 a 49
-        (90, "L", num - 50), # 50 a 89
-        (100, "XC", unidade), # 90 a 99
-        (400, "C" * centena, (dezena * 10) + unidade), # 100 a 399
-        (500, "CD", num - 400), # 400 a 499
-        (900, "D", num - 500), # 500 a 899
-        (1000, "CM", num - 900), # 900 a 999
-        (4000, "M" * milhar, num - milhar * 1000), # 1000 a 3999
-    ]
     
-    for (end, string, recursion) in intervals:
-        if start <= num < end:
-            return string + roman(recursion)
-        start = end
-        
-    return "I" * num
+    comeco = 4
+    tamanhos = [1, 4, 1]
+    constr = [dezena, centena, milhar]
+    digitos = ["I", "V", "X", "L", "C", "D", "M"]
+    
+    if not num < 4:
+        for potencia in range(3):
+            for indice, tamanho in enumerate(tamanhos):
+                fim = comeco + tamanho * (10 ** potencia)
+                if comeco <= num < fim:
+                    string = digitos[indice / 2 + potencia * 2 + 1]
+                    if not tamanho - 1 : string = digitos[potencia * 2] + string
+                    return string + roman(num - comeco)
+                comeco = fim
+            fim = comeco + 30 * (10 ** potencia)
+            if comeco <= num < fim:
+                string = digitos[(potencia + 1) * 2] * constr[potencia]
+                return string + roman(num - constr[potencia] * 10 ** (potencia + 1))
+            comeco = fim
 
+    return "I" * num
 
 class BaseTest(unittest.TestCase):
 
@@ -49,12 +47,11 @@ class BaseTest(unittest.TestCase):
         self.assertEquals(roman(3003), "MMMIII")
         self.assertEquals(roman(3974), "MMMCMLXXIV")
         self.assertEquals(roman(3999), "MMMCMXCIX")
-        
+
     def test_unidades(self):
         romans = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" ]
         for i, r in enumerate(romans):
             self.assertEquals(roman(i), r)
-        
 
     def test_basico(self):
         self.assertEquals(roman(1), "I")
@@ -73,6 +70,4 @@ class BaseTest(unittest.TestCase):
         self.assertEquals(roman(70), "LXX")
         self.assertEquals(roman(80), "LXXX")
         self.assertEquals(roman(90), "XC")
-            
-        
 
