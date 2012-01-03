@@ -10,18 +10,18 @@ def roman(num):
 
     start = 4
     intervals = [
-        (5, "IV", 0),
-        (9, "V", num - 5),
-        (10, "IX", 0),
-        (40, "X" * dezena, unidade),
-        (50, "XL", unidade),
-        (90, "L", num - 50),
-        (100, "XC", unidade),
-        (400, "C" * centena, (dezena * 10) + unidade),
-        (500, "CD", num - 400),
-        (900, "D", num - 500),
-        (1000, "CM", num - 900),
-        (4000, "M" * milhar, num - milhar * 1000),
+        (5, "IV", 0), # 4
+        (9, "V", num - 5), # 5 a 8
+        (10, "IX", 0), # 9
+        (40, "X" * dezena, unidade), # 10 a 39
+        (50, "XL", unidade), # 40 a 49
+        (90, "L", num - 50), # 50 a 89
+        (100, "XC", unidade), # 90 a 99
+        (400, "C" * centena, (dezena * 10) + unidade), # 100 a 399
+        (500, "CD", num - 400), # 400 a 499
+        (900, "D", num - 500), # 500 a 899
+        (1000, "CM", num - 900), # 900 a 999
+        (4000, "M" * milhar, num - milhar * 1000), # 1000 a 3999
     ]
     
     for (end, string, recursion) in intervals:
