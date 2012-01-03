@@ -15,7 +15,7 @@ def roman(num):
     if not num < 4:
         for potencia in range(3):
             for indice, tamanho in enumerate(tamanhos):
-                fim = comeco + tamanho * (10 ** potencia)
+                fim = comeco + tamanho * 10 ** potencia
                 if comeco <= num < fim:
                     subtr = comeco
                     string = digitos[indice / 2 + potencia * 2 + 1]
