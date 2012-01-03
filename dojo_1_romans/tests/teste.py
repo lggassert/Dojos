@@ -9,7 +9,7 @@ def roman(num):
     milhar = (num // 1000) % 10
     
     comeco = 4
-    tamanhos = [1, 4, 1]
+    tamanhos = [1, 4, 1, 30]
     constr = [dezena, centena, milhar]
     digitos = ["I", "V", "X", "L", "C", "D", "M"]
     
@@ -18,15 +18,14 @@ def roman(num):
             for indice, tamanho in enumerate(tamanhos):
                 fim = comeco + tamanho * (10 ** potencia)
                 if comeco <= num < fim:
+                    subtr = comeco
                     string = digitos[indice / 2 + potencia * 2 + 1]
-                    if not tamanho - 1 : string = digitos[potencia * 2] + string
-                    return string + roman(num - comeco)
+                    if tamanho == 30:
+                        subtr = constr[potencia] * 10 ** (potencia + 1) 
+                        string = string * constr[potencia]
+                    elif tamanho == 1 : string = digitos[potencia * 2] + string
+                    return string + roman(num - subtr)
                 comeco = fim
-            fim = comeco + 30 * (10 ** potencia)
-            if comeco <= num < fim:
-                string = digitos[(potencia + 1) * 2] * constr[potencia]
-                return string + roman(num - constr[potencia] * 10 ** (potencia + 1))
-            comeco = fim
 
     return "I" * num
 
