@@ -22,10 +22,10 @@ def roman(num):
                 if comeco <= num < fim:
                     subtr = comeco
                     string = digitos[indice / 2 + potencia * 2 + 1]
-                    if tamanho == 30:
+                    if tamanho == 1 : string = digitos[potencia * 2] + string
+                    elif tamanho == 30:
                         subtr = constr[potencia] * 10 ** (potencia + 1) 
                         string = string * constr[potencia]
-                    elif tamanho == 1 : string = digitos[potencia * 2] + string
                     return string + roman(num - subtr)
                 comeco = fim
 
