@@ -8,32 +8,27 @@ def roman(num):
     centena = (num // 100) % 10
     milhar = (num // 1000) % 10
 
+    start = 4
+    intervals = [
+        (5, "IV", 0),
+        (9, "V", num - 5),
+        (10, "IX", 0),
+        (40, "X" * dezena, unidade),
+        (50, "XL", unidade),
+        (90, "L", num - 50),
+        (100, "XC", unidade),
+        (400, "C" * centena, (dezena * 10) + unidade),
+        (500, "CD", num - 400),
+        (900, "D", num - 500),
+        (1000, "CM", num - 900),
+        (4000, "M" * milhar, num - milhar * 1000),
+    ]
     
-    if num == 4:
-        return "IV"
-    if 5 <= num < 9:
-        return "V" + roman(num - 5)
-    if num == 9:
-        return "IX"
-    if 10 <= num < 40:
-        return "X" * dezena + roman(unidade)
-    if 40 <= num < 50:
-        return "XL" + roman(unidade)
-    if 50 <= num < 90:
-        return "L" + roman(num - 50)
-    if 90 <= num < 100:
-        return "XC" + roman(unidade)
-    if 100 <= num < 400:
-        return "C" * centena + roman((dezena * 10) + unidade)
-    if 400 <= num < 500:
-        return "CD" + roman(num - 400)
-    if 500 <= num < 900:
-        return "D" + roman(num - 500)
-    if 900 <= num < 1000:
-        return "CM" + roman(num - 900)
-    if 1000 <= num < 4000:
-        return "M" * milhar + roman(num - milhar * 1000)
-    
+    for (end, string, recursion) in intervals:
+        if start <= num < end:
+            return string + roman(recursion)
+        start = end
+        
     return "I" * num
 
 
