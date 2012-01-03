@@ -12,6 +12,9 @@ def roman(num):
     constr = [dezena, centena, milhar]
     digitos = ["I", "V", "X", "L", "C", "D", "M"]
     
+    if num >= 4000:
+        num = 0
+    
     if not num < 4:
         for potencia in range(3):
             for indice, tamanho in enumerate(tamanhos):
@@ -31,6 +34,8 @@ def roman(num):
 class BaseTest(unittest.TestCase):
 
     def test_babacas(self):
+        self.assertEquals(roman(-1), "")
+        self.assertEquals(roman(4000), "")
         self.assertEquals(roman(42), "XLII")
         self.assertEquals(roman(54), "LIV")
         self.assertEquals(roman(89), "LXXXIX")
