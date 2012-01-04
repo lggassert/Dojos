@@ -3,31 +3,30 @@
 import unittest
 
 def roman(num):
-    dezena = (num // 10) % 10
-    centena = (num // 100) % 10
-    milhar = (num // 1000) % 10
-    
-    comeco = 4
-    tamanhos = [1, 4, 1, 30]
-    constr = [dezena, centena, milhar]
-    digitos = ["I", "V", "X", "L", "C", "D", "M"]
-    
     if num >= 4000:
         num = 0
     
     if not num < 4:
-        for potencia in range(3):
-            for indice, tamanho in enumerate(tamanhos):
-                fim = comeco + tamanho * 10 ** potencia
-                if comeco <= num < fim:
-                    subtr = comeco
-                    string = digitos[indice / 2 + potencia * 2 + 1]
-                    if tamanho == 1 : string = digitos[potencia * 2] + string
-                    elif tamanho == 30:
-                        subtr = constr[potencia] * 10 ** (potencia + 1) 
-                        string = string * constr[potencia]
+        constr = [int(i) for i in str(num)]
+        constr.pop()
+        constr.reverse()
+
+        sizes = [1, 4, 1, 30]
+        digits = ["I", "V", "X", "L", "C", "D", "M"]
+
+        start = 4
+        for power in range(3):
+            for index, size in enumerate(sizes):
+                end = start + size * 10 ** power
+                if start <= num < end:
+                    subtr = start
+                    string = digits[index / 2 + power * 2 + 1]
+                    if size == 1 : string = digits[power * 2] + string
+                    elif size == 30:
+                        subtr = constr[power] * 10 ** (power + 1) 
+                        string = string * constr[power]
                     return string + roman(num - subtr)
-                comeco = fim
+                start = end
 
     return "I" * num
 
